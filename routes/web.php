@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExampleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+/*Task2
 Route::get('about', function () {
   return 'About';
 });
@@ -59,6 +60,40 @@ Route::prefix('support')->group(function(){
                 return 'Logistics';
              });    
         });
+*/ 
+        //** Third lecture **//
+      Route::get('/', function () {
+          return view('welcome');
+        });
+        // Route::fallback(function(){
+        //   return redirect('/');
+        // });
+
+      // Route::get('cv', function(){
+      //   return view('cv');
+      // });
+      Route::get('login', function () {
+        return view('login');
+      });
+      Route::get('task3', function () {
+        return view('task3');
+      });
+      
+      Route::post('receive', function(){
+          return 'Data received';
+        })->name('receive');
+        
+        //**Task 3**/
+      Route::post('submit', function(){
+          $arr=array();
+          $arr[]="The title of the car is: ". $_POST["title"];
+          $arr[]="The price is: ". $_POST["price"];
+          $arr[]="The description is: ". $_POST["description"];
+          $arr[]="It is: ". $_POST["remember"];
+          return $arr;
+        })->name('submit');
+
+      Route::get('test1',[ExampleController::class, 'test1']);
 
 //**SECOND LECTURE**//
 /*
