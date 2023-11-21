@@ -22,7 +22,6 @@ class PieceController extends Controller
     public function create()
     {
         return view('pieces');
-        //name of the blade//
 
     }
 
@@ -32,15 +31,10 @@ class PieceController extends Controller
     public function store(Request $request)
     {
         $pieces= new Piece;
-        $pieces->title = $request->title;
-        $pieces->content = $request->content;
-
-        if(isset($request->published)){
-            $pieces->published = true;
-        }else{
-            $pieces->published = false;
-        }
-        $pieces->author = $request->author;
+        $pieces->title = "BMW";
+        $pieces->content = "here";
+        $pieces->published = true;
+        $pieces->author = "Noah";
         $pieces->save();
         return "news is published successfully";
         
