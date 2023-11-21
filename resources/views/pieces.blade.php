@@ -12,7 +12,7 @@
 
 <div class="container">
   <h2>Vertical (basic) form</h2>
-  <form action="{{ route('receive') }}" method="post">
+  <form action="{{ route('storenews') }}" method="post">
     @csrf
     <div class="form-group">
       <label for="title">Title:</label>
@@ -34,12 +34,12 @@
       <label for="author">Author:</label>
       <input type="text" class="form-control" id="author" placeholder="Write the name of the author" name="author">
     </div>
-    <div class="checkbox">
-<label><input type="hidden" name="remember" value="Off">
-<input type="checkbox" id="active" name="remember" value="On" class="flat">Can it published?</label></div>
     <!-- <div class="checkbox">
-      <label><input type="checkbox" name="remember"> Remember me</label>
-    </div> -->
+<label><input type="hidden" name="published" value="Off">
+<input type="checkbox" id="active" name="published" value="On" class="flat">Can it published?</label></div> -->
+    <div class="checkbox">
+      <label><input type="checkbox" name="published"> Remember me</label>
+    </div>
     <button type="submit" class="btn btn-default">Submit</button>
     
   </form>

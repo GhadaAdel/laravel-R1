@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\PieceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,28 +74,37 @@ Route::prefix('support')->group(function(){
       // Route::get('cv', function(){
       //   return view('cv');
       // });
-      Route::get('login', function () {
-        return view('login');
-      });
-      Route::get('task3', function () {
-        return view('task3');
-      });
-      
-      Route::post('receive', function(){
-          return 'Data received';
-        })->name('receive');
-        
-        //**Task 3**/
-      Route::post('submit', function(){
-          $arr=array();
-          $arr[]="The title of the car is: ". $_POST["title"];
-          $arr[]="The price is: ". $_POST["price"];
-          $arr[]="The description is: ". $_POST["description"];
-          $arr[]="It is: ". $_POST["remember"];
-          return $arr;
-        })->name('submit');
+      // Route::get('views', function () {
+      //   return view('news');
+      // });
 
-      Route::get('test1',[ExampleController::class, 'test1']);
+      Route::get('receive',[ExampleController::class,'received'])->name('receive');
+
+
+      Route::get('task3',[CarController::class,'store']);
+      /**changed the name of the table from news to pieces **/
+      /**task4**/
+      Route::get('news',[PieceController::class,'create']);
+      Route::post('storenews',[PieceController::class,'store'])->name('storenews');
+      // Route::get('task3', function () {
+      //   return view('task3');
+      // });
+      
+      // Route::post('receive', function(){
+      //     return 'Data received';
+      //   })->name('receive');
+        
+      //   //**Task 3**/
+      // Route::post('submit', function(){
+      //     $arr=array();
+      //     $arr[]="The title of the car is: ". $_POST["title"];
+      //     $arr[]="The price is: ". $_POST["price"];
+      //     $arr[]="The description is: ". $_POST["description"];
+      //     $arr[]="It is: ". $_POST["remember"];
+      //     return $arr;
+      //   })->name('submit');
+
+      // Route::get('test1',[ExampleController::class, 'test1']);
 
 //**SECOND LECTURE**//
 /*

@@ -34,8 +34,8 @@
         <textarea class="form-control" rows="5" id="description" name="description"></textarea>
       </div> 
       <div class="checkbox">
-	 <label><input type="hidden" name="remember" value="Off">
-     <input type="checkbox" id="active" name="remember" value="On" class="flat"></label></div>
+<label><input type="hidden" name="remember" value="Off">
+<input type="checkbox" id="active" name="remember" value="On" class="flat"></label></div>
     <button type="submit" name="submit" class="btn btn-default">Add</button>
   </form>
 </div>
