@@ -13,7 +13,8 @@ class PieceController extends Controller
      */
     public function index()
     {
-        //
+        $posts= Piece::get();
+        return view ('posts', compact('posts'));
     }
 
     /**
@@ -31,10 +32,14 @@ class PieceController extends Controller
     public function store(Request $request)
     {
         $pieces= new Piece;
-        $pieces->title = "BMW";
-        $pieces->content = "here";
-        $pieces->published = true;
-        $pieces->author = "Noah";
+        $pieces->title =  $request->title;
+        $pieces->content = $request->content;
+        if(isset($request->published)){
+            $pieces->published = true;
+        }else{
+            $pieces->published = false;
+        }
+        $pieces->author = $request->author;
         $pieces->save();
         return "news is published successfully";
         
@@ -53,7 +58,8 @@ class PieceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = Piece::findOrfail($id);
+        return view('updatepost', compact('post'));
     }
 
     /**
@@ -61,7 +67,8 @@ class PieceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return view('updatepost');
+
     }
 
     /**

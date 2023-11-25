@@ -12,16 +12,16 @@
 
 <div class="container">
   <h2>Update car</h2>
-  <form action="{{ route('test1') }}" method="post">
+  <form action="{{ route('updatecar', $car->id) }}" method="post">
     @csrf
     @method ('put')
     <div class="form-group">
       <label for="title">Title:</label>
-      <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
+      <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" value={{$car->carTitle}}>
     </div>
     <div class="form-group">
-        <label for="content">Content:</label>
-        <textarea class="form-control" rows="5" id="content" name="content"></textarea>
+        <label for="content">description:</label>
+        <textarea class="form-control" rows="5" id="description" name="description">{{$car->description}}</textarea>
       </div> 
     <!-- <div class="form-group">
       <label for="email">Email:</label>
@@ -35,9 +35,10 @@
       <label for="author">Author:</label>
       <input type="text" class="form-control" id="author" placeholder="Write the name of the author" name="author">
     </div> --}}
+    {{-- <input type="hidden" name="remember" value="Off"> --}}
     <div class="checkbox">
-<label><input type="hidden" name="remember" value="Off">
-<input type="checkbox" id="active" name="remember" value="On" class="flat">Can it published?</label></div>
+<label>
+<input type="checkbox" id="active" name="published" @checked($car->published)>Can it published?</label></div>
     <!-- <div class="checkbox">
       <label><input type="checkbox" name="remember"> Remember me</label>
     </div> -->

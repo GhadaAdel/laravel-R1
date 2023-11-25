@@ -78,7 +78,10 @@ Route::prefix('support')->group(function(){
       //   return view('news');
       // });
 
-      Route::get('receive',[ExampleController::class,'received'])->name('receive');
+      //Route::get('test1',[ExampleController::class,'test1'])->name('test1'); 
+
+      Route::get('test1',[CarController::class,'index'])->name('test1');
+
 
 
       Route::get('task3',[CarController::class,'store']);
@@ -86,6 +89,20 @@ Route::prefix('support')->group(function(){
       /**task4**/
       Route::get('news',[PieceController::class,'create']);
       Route::post('storenews',[PieceController::class,'store'])->name('storenews');
+
+      Route::get('cars',[CarController::class,'index']);
+
+      Route::get('editcar/{id}',[CarController::class,'edit']);
+
+      Route::put('updatecar/{id}',[CarController::class,'update'])->name('updatecar');
+     //**task5 ((pieces--posts))**//
+     Route::get('posts',[PieceController::class,'index']);
+
+     Route::get('editpost/{id}',[PieceController::class,'edit']);
+
+     Route::put('updatepost/{id}',[PieceController::class,'update'])->name('updatepost');
+
+
       // Route::get('task3', function () {
       //   return view('task3');
       // });
