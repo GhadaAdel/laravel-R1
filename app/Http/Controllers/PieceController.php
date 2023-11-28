@@ -8,6 +8,8 @@ use App\Models\Piece;
 
 class PieceController extends Controller
 {
+    private $columns =['title', 'description', 'published'];
+
     /**
      * Display a listing of the resource.
      */
@@ -68,7 +70,12 @@ class PieceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return view('updatepost');
+        $data= $request->only($this->columns);
+        $data['published'] = isset($data['published'])? true:false;
+
+        Piece::where('id', $id)->update($data);
+        return 'updated';
+       
 
     }
 
