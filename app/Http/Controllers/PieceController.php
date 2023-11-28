@@ -50,7 +50,8 @@ class PieceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post = Piece::findOrFail($id);
+        return view('showpost',compact('post'));
     }
 
     /**
@@ -76,6 +77,9 @@ class PieceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // $post = Piece::findOrfail($id);
+        // return view ('deletepost', compact('post')); 
+        Piece::where('id',$id)->delete();
+        return 'deleted';
     }
 }

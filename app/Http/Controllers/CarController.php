@@ -7,6 +7,7 @@ use App\Models\Car;
 
 class CarController extends Controller
 {
+    private $columns =['carTitle', 'description'];
     /**
      * Display a listing of the resource.
      */
@@ -50,7 +51,8 @@ class CarController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $car = Car::findOrFail($id);
+        return view('showcar',compact('car'));
     }
 
     /**
@@ -69,7 +71,8 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return view('updatecar');
+        Car::where('id', $id)->update($request->only($this->columns));
+        return 'updated';
         
     }
 
@@ -78,6 +81,9 @@ class CarController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // $cars = Car::findOrfail($id);
+        // return view('cars', compact('cars'));
+        Car::where('id',$id)->delete();
+        return "deleted";
     }
 }

@@ -102,6 +102,16 @@ Route::prefix('support')->group(function(){
 
      Route::put('updatepost/{id}',[PieceController::class,'update'])->name('updatepost');
 
+     Route::get('showcar/{id}',[CarController::class,'show'])->name('showcar');
+
+     Route::get('showpost/{id}',[PieceController::class,'show'])->name('showpost');
+
+
+
+     Route::get('deletecar/{id}',[CarController::class,'destroy']);
+
+     Route::get('deletepost/{id}',[PieceController::class,'destroy']);
+
 
       // Route::get('task3', function () {
       //   return view('task3');

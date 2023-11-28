@@ -20,6 +20,8 @@
         <th>Published</th>
         <th>Author</th>
         <th>Edit</th>
+        <th>Show</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -30,6 +32,8 @@
             <td>{{$post->published ? 'Yes ✔' : 'No ✖'}}</td>
             <td>{{$post->author}}</td>
             <td><a href="editpost/{{$post->id}}">Edit</a></td>
+            <td><a href="showpost/{{$post->id}}">Show</a></td>
+            <td><a href="deletepost/{{$post->id}}">Delete</a></td>
           </tr>
         @endforeach
     </tbody>
