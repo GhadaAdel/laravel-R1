@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Piece;
 
 
 class PieceController extends Controller
 {
-    private $columns =['title', 'description', 'published'];
+    private $columns =['title', 'content','author', 'published'];
 
     /**
      * Display a listing of the resource.
@@ -33,17 +34,28 @@ class PieceController extends Controller
      */
     public function store(Request $request)
     {
-        $pieces= new Piece;
-        $pieces->title =  $request->title;
-        $pieces->content = $request->content;
-        if(isset($request->published)){
-            $pieces->published = true;
-        }else{
-            $pieces->published = false;
-        }
-        $pieces->author = $request->author;
-        $pieces->save();
-        return "news is published successfully";
+        // $pieces= new Piece;
+        // $pieces->title =  $request->title;
+        // $pieces->content = $request->content;
+        // if(isset($request->published)){
+        //     $pieces->published = true;
+        // }else{
+        //     $pieces->published = false;
+        // }
+        // $pieces->author = $request->author;
+        // $pieces->save();
+        // return "news is published successfully";
+        $data= $request->only($this->columns);
+        $data['published'] = isset($data['published'])? true : false;
+
+        $request->validate([
+            'title'=>'required|string',
+            'content'=>'required|string|max:5',
+            'author'=>'required|string'
+
+        ]);
+        Piece::create($data);
+        return "done";
         
     }
 
@@ -82,11 +94,35 @@ class PieceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse //softdelete
     {
-        // $post = Piece::findOrfail($id);
-        // return view ('deletepost', compact('post')); 
+        // $cars = Car::findOrfail($id);
+        // return view('cars', compact('cars'));
         Piece::where('id',$id)->delete();
-        return 'deleted';
+        return redirect('posts');
     }
+
+    public function forceDelete(string $id): RedirectResponse //forcedelete
+    {
+        // $cars = Car::findOrfail($id);
+        // return view('cars', compact('cars'));
+        Piece::where('id',$id)->forceDelete();
+        return redirect('posts');
+    }
+
+    public function restore(string $id): RedirectResponse
+    {
+        // $cars = Car::findOrfail($id);
+        // return view('cars', compact('cars'));
+        Piece::where('id',$id)->restore();
+        return redirect('posts');
+    }
+    public function trashedpost() 
+    {
+        // $cars = Car::findOrfail($id);
+        // return view('cars', compact('cars'));
+        $posts= Piece::onlyTrashed()->get();
+        return view('trashedpost', compact('posts'));
+    }
+
 }

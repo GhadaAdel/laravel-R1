@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Car;
 
 class CarController extends Controller
@@ -25,7 +26,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        //
+        return view('addcar');
     }
 
     /**
@@ -33,16 +34,28 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $cars= new Car;
-        $cars->carTitle = $request->carTitle;
-        $cars->description = $request->description;
-        if(isset($request->published)){
-            $cars->published = true;
-        }else{
-            $cars->published = false;
-        }
-        $cars->save();
-        return "successfully";
+        // $cars= new Car;
+        // $cars->carTitle = $request->carTitle;
+        // $cars->description = $request->description;
+        // if(isset($request->published)){
+        //     $cars->published = true;
+        // }else{
+        //     $cars->published = false;
+        // }
+        // $cars->save();
+        // return "successfully";
+
+        $data= $request->only($this->columns);
+        $data['published'] = isset($data['published'])? true : false;
+
+        $request->validate([
+            'carTitle'=>'required|string',
+            'description'=>'required|string|max:5'
+        ]);
+        Car::create($data);
+        return "done";
+        // Car::create($request->only($this->columns));
+        // return redirect('cars');
         
     }
 
@@ -82,11 +95,34 @@ class CarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse //softdelete
     {
         // $cars = Car::findOrfail($id);
         // return view('cars', compact('cars'));
         Car::where('id',$id)->delete();
-        return "deleted";
+        return redirect('cars');
+    }
+
+    public function forceDelete(string $id): RedirectResponse //forcedelete
+    {
+        // $cars = Car::findOrfail($id);
+        // return view('cars', compact('cars'));
+        Car::where('id',$id)->forceDelete();
+        return redirect('cars');
+    }
+
+    public function restore(string $id): RedirectResponse
+    {
+        // $cars = Car::findOrfail($id);
+        // return view('cars', compact('cars'));
+        Car::where('id',$id)->restore();
+        return redirect('cars');
+    }
+    public function trashed() 
+    {
+        // $cars = Car::findOrfail($id);
+        // return view('cars', compact('cars'));
+        $cars= Car::onlyTrashed()->get();
+        return view('trashed', compact('cars'));
     }
 }

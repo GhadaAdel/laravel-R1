@@ -13,7 +13,7 @@
   <h2>Add Car</h2>
   <?php
    if(isset($_POST['submit'])) {
-    $title=$_POST["title"];
+    $title=$_POST["carTitle"];
     $price=$_POST["price"];
     $description=$_POST["description"];
     $published=$_POST["remember"];
@@ -23,7 +23,7 @@
     @csrf
     <div class="form-group">
       <label for="title">Title:</label>
-      <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
+      <input type="text" class="form-control" id="title" placeholder="Enter title" name="carTitle">
     </div>
     <div class="form-group">
       <label for="price">Price:</label>

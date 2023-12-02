@@ -4,6 +4,7 @@ use App\Http\Controllers\CarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\PieceController;
+use App\Models\Car;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +85,7 @@ Route::prefix('support')->group(function(){
 
 
 
-      Route::get('task3',[CarController::class,'store']);
+      //Route::get('task3',[CarController::class,'store']);
       /**changed the name of the table from news to pieces **/
       /**task4**/
       Route::get('news',[PieceController::class,'create']);
@@ -111,6 +112,25 @@ Route::prefix('support')->group(function(){
      Route::get('deletecar/{id}',[CarController::class,'destroy']);
 
      Route::get('deletepost/{id}',[PieceController::class,'destroy']);
+
+     Route::post('addcar',[CarController::class,'store'])->name('addcar');
+
+      Route::get('addcar',[CarController::class,'create']);
+
+      Route::get('trashed',[CarController::class,'trashed']);
+
+      Route::get('restorecar/{id}',[CarController::class,'restore']);
+
+      Route::get('forceDelete/{id}',[CarController::class,'forceDelete']);
+
+
+      Route::get('trashedpost',[PieceController::class,'trashedpost']);
+
+      Route::get('restorepost/{id}',[PieceController::class,'restore']);
+
+      Route::get('forcepost/{id}',[PieceController::class,'forceDelete']);
+
+
 
 
       // Route::get('task3', function () {
