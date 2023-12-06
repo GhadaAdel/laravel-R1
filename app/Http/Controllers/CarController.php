@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Car;
+use App\Traits\Common;
 
 class CarController extends Controller
 {
+    use Common;
+
     private $columns =['carTitle', 'description', 'published'];
     /**
      * Display a listing of the resource.
@@ -45,15 +48,28 @@ class CarController extends Controller
         // $cars->save();
         // return "successfully";
 
-        $data= $request->only($this->columns);
-        $data['published'] = isset($data['published'])? true : false;
+        // $data= $request->only($this->columns);
+        // $data['published'] = isset($data['published'])? true : false;
+        $messages=[
+            'carTitle.required'=>'This is required',
+            'description.required'=>'This is required'
+        ];
 
-        $request->validate([
+        $data = $request->validate([
             'carTitle'=>'required|string',
-            'description'=>'required|string|max:5'
-        ]);
+            'description'=>'required|string|max:5',
+            'image' => 'required|mimes:png,jpg,jpeg|max:2048'
+
+        ], $messages);
+
+        $fileName= $this->uploadFile($request->image,'assets\images');
+
+        $data['image'] = $fileName;
+
+        $data['published'] = isset($request['published'])? true : false;
+
         Car::create($data);
-        return "done";
+        return "weeeeee";
         // Car::create($request->only($this->columns));
         // return redirect('cars');
         
@@ -84,14 +100,71 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data= $request->only($this->columns);
-        $data['published'] = isset($data['published'])? true:false;
+        // $data= $request->only($this->columns);
+        // $data['published'] = isset($data['published'])? true:false;
 
-        Car::where('id', $id)->update($data);
-        return 'updated';
+        // Car::where('id', $id)->update($data);
+        // return 'updated';
         
+        $messages=[
+            'carTitle.required'=>'This is required',
+            'description.required'=>'This is required'
+        ];
+
+        $data = $request->validate([
+            'carTitle'=>'required|string',
+            'description'=>'required|string|max:5',
+            'image' => 'mimes:png,jpg,jpeg|max:2048'
+
+        ], $messages);
+
+        // if (Car::has('image')) {
+        //     $edit_rules['image'] = 'required|image|mimes:jpeg,jpg,bmp,png,gif';
+        // }
+    
+        // $v = Car::make(Car::all(), $edit_rules);
+    
+        // if ($data) {
+    
+        //     if ($v->fails()) {
+        //         return Car::back()->withErrors($v);
+        //     }
+    
+        $fileName= $this->uploadFile($request->image,'assets\images');
+
+
+        $data['image'] = $fileName;
+
+        $data['published'] = isset($request['published'])? true : false;
+
+        Car::where('id',$id)->update($data);
+
+
+        return "DONE";
     }
 
+    
+    public function validateImage(Request $request)
+    {
+
+
+        // $request->validate(['image' => 'required|mimes:png,jpg,jpeg|max:2048']);
+        // return redirect()->back();
+
+        // [Car::requiredIf(function (){
+
+        //     if (!empty(Car::find($this->updateFile)->file_upload)) {
+      
+        //        return false;
+        //     }
+      
+        //       return true;
+      
+        //    }),'image','mimes:jpeg,png,jpg,svg','max:2048'];
+       
+      //  return "The id is: ".$id;
+        //return view ('cars', compact('cars'));
+    }
     /**
      * Remove the specified resource from storage.
      */

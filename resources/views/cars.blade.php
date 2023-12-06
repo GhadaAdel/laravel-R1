@@ -19,6 +19,7 @@
         <th>Title</th>
         <th>Content</th>
         <th>Published</th>
+        <th>Image</th>
         <th>Edit</th>
         <th>Show</th>
         <th>Delete</th>
@@ -30,6 +31,7 @@
             <td>{{$car->carTitle}}</td>
             <td>{{$car->description}}</td>
             <td>{{$car->published ? 'Yes ✔' : 'No ✖'}}</td>
+            <td>{{$car->image}}</td>
             <td><a href="editcar/{{$car->id}}">Edit</a></td>
             <td><a href="showcar/{{$car->id}}">Show</a></td>
             <td><a href="deletecar/{{$car->id}}">Delete</a></td>

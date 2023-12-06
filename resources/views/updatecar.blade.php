@@ -12,17 +12,41 @@
 
 <div class="container">
   <h2>Update car</h2>
-  <form action="{{ route('updatecar', $car->id) }}" method="post">
+  <form action="{{ route('updatecar', $car->id) }}" method="post" enctype="multipart/form-data">
     @csrf
     @method ('put')
     <div class="form-group">
       <label for="title">Title:</label>
-      <input type="text" class="form-control" id="title" placeholder="Enter title" name="carTitle" value={{$car->carTitle}}>
+      <input type="text" class="form-control" id="title" placeholder="Enter title" name="carTitle" value="{{ old('carTitle')}}">
+      @error('carTitle')
+      <div class="alert alert-warning">
+        {{ $message }}
     </div>
-    <div class="form-group">
-        <label for="content">description:</label>
-        <textarea class="form-control" rows="5" id="description" name="description">{{$car->description}}</textarea>
-      </div> 
+
+    @enderror
+</div>
+<div class="form-group">
+  <label for="description">Description:</label>
+  <input type="text" class="form-control" id="description" placeholder="Enter description" name="description" value="{{ old('description')}}">
+
+  @error('description')
+  <div class="alert alert-warning">
+    {{ $message }}
+</div>
+@enderror
+
+</div>
+      <div class="form-group">
+        <label for="image">Image:</label>
+        <input type="file" class="form-control" id="image" name="image" value="{{ old('image')}}">
+  
+        @error('image')
+        <div class="alert alert-warning">
+          {{ $message }}
+      </div>
+      @enderror
+  
+      </div>
     <!-- <div class="form-group">
       <label for="email">Email:</label>
       <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">

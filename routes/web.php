@@ -130,7 +130,12 @@ Route::prefix('support')->group(function(){
 
       Route::get('forcepost/{id}',[PieceController::class,'forceDelete']);
 
+      Route::get('upload',[ExampleController::class,'showUpload']);
 
+      Route::post('upload',[ExampleController::class,'upload'])->name('upload');
+
+    
+      Route::post('validateImage/{id}',[CarController::class,'validateImage'])->name('validateImage');
 
 
       // Route::get('task3', function () {
