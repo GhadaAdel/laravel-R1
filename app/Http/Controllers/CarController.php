@@ -100,23 +100,42 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $messages= $this->messages();
+
+        $data = $request->validate([
+            'carTitle'=>'required|string',
+            'description'=>'required|string',
+            'image' => 'sometimes|mimes:png,jpg,jpeg|max:2048',
+        ], $messages);
+       
+        $data['published'] = isset($request->published);
+
+        // update image if new file selected
+        if($request->hasFile('image')){
+            $fileName = $this->uploadFile($request->image, 'assets/images');
+            $data['image']= $fileName;
+        }
+
+        //return dd($data);
+        Car::where('id', $id)->update($data);
+        return 'Updated';
         // $data= $request->only($this->columns);
         // $data['published'] = isset($data['published'])? true:false;
 
         // Car::where('id', $id)->update($data);
         // return 'updated';
         
-        $messages=[
-            'carTitle.required'=>'This is required',
-            'description.required'=>'This is required'
-        ];
+        // $messages=[
+        //     'carTitle.required'=>'This is required',
+        //     'description.required'=>'This is required'
+        // ];
 
-        $data = $request->validate([
-            'carTitle'=>'required|string',
-            'description'=>'required|string|max:5',
-            'image' => 'mimes:png,jpg,jpeg|max:2048'
+        // $data = $request->validate([
+        //     'carTitle'=>'required|string',
+        //     'description'=>'required|string|max:5',
+        //     'image' => 'mimes:png,jpg,jpeg|max:2048'
 
-        ], $messages);
+        // ], $messages);
 
         // if (Car::has('image')) {
         //     $edit_rules['image'] = 'required|image|mimes:jpeg,jpg,bmp,png,gif';
@@ -130,24 +149,27 @@ class CarController extends Controller
         //         return Car::back()->withErrors($v);
         //     }
     
-        $fileName= $this->uploadFile($request->image,'assets\images');
+        // $fileName= $this->uploadFile($request->image,'assets\images');
 
 
-        $data['image'] = $fileName;
+        // $data['image'] = $fileName;
 
-        $data['published'] = isset($request['published'])? true : false;
+        // $data['published'] = isset($request['published'])? true : false;
 
-        Car::where('id',$id)->update($data);
+        // Car::where('id',$id)->update($data);
 
 
-        return "DONE";
+        // return "DONE";
     }
 
     
-    public function validateImage(Request $request)
+    public function messages()
     {
 
-
+         return [
+                'carTitle.required'=>'This is required',
+                'description.required'=>'This is required'
+            ];
         // $request->validate(['image' => 'required|mimes:png,jpg,jpeg|max:2048']);
         // return redirect()->back();
 

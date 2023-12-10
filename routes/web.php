@@ -4,6 +4,7 @@ use App\Http\Controllers\CarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\PieceController;
+use App\Http\Controllers\PlaceController;
 use App\Models\Car;
 
 /*
@@ -135,7 +136,16 @@ Route::prefix('support')->group(function(){
       Route::post('upload',[ExampleController::class,'upload'])->name('upload');
 
     
-      Route::post('validateImage/{id}',[CarController::class,'validateImage'])->name('validateImage');
+      Route::get('place',[ExampleController::class,'place']);
+      Route::get('blog',[ExampleController::class,'blog']);
+
+
+
+      Route::get('addplace',[PlaceController::class,'create']);
+      Route::post('addplace',[PlaceController::class,'store'])->name('addplace');
+      Route::get('places',[PlaceController::class,'index']);
+      
+      Route::get('place',[PlaceController::class,'index']);
 
 
       // Route::get('task3', function () {

@@ -13,6 +13,15 @@ class ExampleController extends Controller
         return view("upload");
     }
 
+    public function place() {
+        return view("place");
+    }
+
+    public function blog() {
+        return view("blog");
+    }
+
+
     public function upload(Request $request) {
         // $extension= $request->image->getClientOriginalExtension();
         // $fileName = time() . '.' . $extension;
