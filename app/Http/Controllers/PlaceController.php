@@ -20,6 +20,7 @@ class PlaceController extends Controller
     {
         $places= Place::get();
         return view ('places', compact('places'));
+
     }
 
     /**
@@ -92,7 +93,12 @@ class PlaceController extends Controller
      */
     public function destroy(string $id): RedirectResponse
     {
+
         Place::where('id',$id)->delete();
         return redirect('places');
+
+
+        // $places= Place::onlyTrashed()->get();
+        // return view('places', compact('places'));
     }
 }
