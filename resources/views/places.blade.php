@@ -18,9 +18,12 @@
       <tr>
         <th>Title</th>
         <th>Description</th>
+        <th>Date</th>
         <th>Image</th>
         <th>From</th>
         <th>To</th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -28,9 +31,12 @@
         <tr>
             <td>{{$place->title}}</td>
             <td>{{$place->description}}</td>
+            <td>{{$place->created_at}}</td>
             <td>{{$place->image}}</td>
             <td>{{$place->From}}</td>
             <td>{{$place->To}}</td>
+            <td><a href="editplace/{{$place->id}}">Edit</a></td>
+            <td><a href="deleteplace/{{$place->id}}">Delete</a></td>
             
           </tr>
         @endforeach

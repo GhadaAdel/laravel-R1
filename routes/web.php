@@ -143,9 +143,14 @@ Route::prefix('support')->group(function(){
 
       Route::get('addplace',[PlaceController::class,'create']);
       Route::post('addplace',[PlaceController::class,'store'])->name('addplace');
+
+
       Route::get('places',[PlaceController::class,'index']);
+
+      Route::get('editplace/{id}',[PlaceController::class,'edit']);
+      Route::get('deleteplace/{id}',[PlaceController::class,'destroy']);
       
-      Route::get('place',[PlaceController::class,'index']);
+    //  Route::get('place',[PlaceController::class,'index']);
 
 
       // Route::get('task3', function () {
