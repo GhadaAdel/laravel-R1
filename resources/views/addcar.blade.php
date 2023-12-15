@@ -36,6 +36,18 @@
     @enderror
 
     </div>
+
+    <div class="form-group">
+      <label for="shortDescription">shortDescription:</label>
+      <input type="text" class="form-control" id="shortDescription" placeholder="Enter shortDescription" name="shortDescription" value="{{ old('shortDescription')}}">
+
+      @error('shortDescription')
+      <div class="alert alert-warning">
+        {{ $message }}
+    </div>
+    @enderror
+
+    </div>
     <div class="form-group">
       <label for="image">Image:</label>
       <input type="file" class="form-control" id="image" name="image" value="{{ old('image')}}">
@@ -47,6 +59,16 @@
     @enderror
 
     </div>
+    <div class="form-group">
+      <label for="category_id">category_id:</label>
+    <select name="category_id" id="">
+      <option value="">Select Category</option>
+      @foreach ($categories as $category)
+      <option value="{{ $category->id}}">{{ $category->categoryName}}</option>
+      @endforeach
+    </select>
+  </div>
+
       <div class="checkbox">
         <label><input type="checkbox" name="published"> Remember me</label>
       </div>

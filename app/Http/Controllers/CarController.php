@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Car;
+use App\Models\Category;
 use App\Traits\Common;
 
 class CarController extends Controller
@@ -29,7 +30,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('addcar');
+        $categories = Category::select('id','categoryName')->get();
+        return view('addcar', compact('categories'));
     }
 
     /**
@@ -58,7 +60,9 @@ class CarController extends Controller
         $data = $request->validate([
             'carTitle'=>'required|string',
             'description'=>'required|string|max:5',
-            'image' => 'required|mimes:png,jpg,jpeg|max:2048'
+            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            'category_id'=>'required',
+            'shortDescription'=>'required'
 
         ], $messages);
 
@@ -90,7 +94,10 @@ class CarController extends Controller
     public function edit(string $id)
     {
         $car = Car::findOrfail($id);
-        return view('updatecar', compact('car'));
+        $category_id=$car['category_id'];
+        $categories = Category::select('id','categoryName')->whereNotIn('id', [$category_id])->get();
+        return view('updatecar', compact('car','categories'));
+        
       //  return "The id is: ".$id;
         //return view ('cars', compact('cars'));
     }
@@ -106,17 +113,21 @@ class CarController extends Controller
             'carTitle'=>'required|string',
             'description'=>'required|string',
             'image' => 'sometimes|mimes:png,jpg,jpeg|max:2048',
-        ], $messages);
+            'category_id'=>'sometimes',
+            'shortDescription'=>'required'
+                ], $messages);
        
         $data['published'] = isset($request->published);
+
 
         // update image if new file selected
         if($request->hasFile('image')){
             $fileName = $this->uploadFile($request->image, 'assets/images');
             $data['image']= $fileName;
         }
-
+        
         //return dd($data);
+        
         Car::where('id', $id)->update($data);
         return 'Updated';
         // $data= $request->only($this->columns);

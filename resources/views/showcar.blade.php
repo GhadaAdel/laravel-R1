@@ -11,5 +11,8 @@
     Car Description: {{  $car->description }}
     <br>
     Published: {{  $car->published }}
+    <br>
+    Category: {{  $car->category->categoryName }}
+
 </body>
 </html>

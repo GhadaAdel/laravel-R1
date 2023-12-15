@@ -17,7 +17,7 @@
     @method ('put')
     <div class="form-group">
       <label for="title">Title:</label>
-      <input type="text" class="form-control" id="title" placeholder="Enter title" name="carTitle" value="{{ old('carTitle')}}">
+      <input type="text" class="form-control" id="title" placeholder="Enter title" name="carTitle" value={{$car->carTitle}}>
       @error('carTitle')
       <div class="alert alert-warning">
         {{ $message }}
@@ -27,7 +27,7 @@
 </div>
 <div class="form-group">
   <label for="description">Description:</label>
-  <input type="text" class="form-control" id="description" placeholder="Enter description" name="description" value="{{ old('description')}}">
+  <input type="text" class="form-control" id="description" placeholder="Enter description" name="description" value={{$car->description}}>
 
   @error('description')
   <div class="alert alert-warning">
@@ -36,9 +36,20 @@
 @enderror
 
 </div>
+<div class="form-group">
+  <label for="shortDescription">shortDescription:</label>
+  <input type="text" class="form-control" id="shortDescription" placeholder="Enter shortDescription" name="shortDescription" value={{$car->shortDescription}}>
+
+  @error('shortDescription')
+  <div class="alert alert-warning">
+    {{ $message }}
+</div>
+@enderror
+
+</div>
       <div class="form-group">
         <label for="image">Image:</label>
-        <input type="file" class="form-control" id="image" name="image" value="{{ old('image')}}">
+        <input type="file" class="form-control" id="image" name="image" value={{$car->image}}>
         <img src="{{asset ('assets/images/'. $car->image)}}" alt="cars" style="width:300px;">
         @error('image')
         <div class="alert alert-warning">
@@ -60,6 +71,16 @@
       <input type="text" class="form-control" id="author" placeholder="Write the name of the author" name="author">
     </div> --}}
     {{-- <input type="hidden" name="remember" value="Off"> --}}
+    <div class="form-group">
+      <label for="category_id">category_id:</label>
+    <select name="categoryName" id="">
+      <option>{{$car->category->categoryName}}</option>
+      @foreach ($categories as $cat)
+      <option value="{{ $cat->id }}">{{$cat->categoryName}} </option>
+
+      @endforeach
+    </select>
+  </div>
     <div class="checkbox">
 <label>
 <input type="checkbox" id="active" name="published" @checked($car->published)>Can it published?</label></div>
