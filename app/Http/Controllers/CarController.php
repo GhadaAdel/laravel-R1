@@ -94,8 +94,9 @@ class CarController extends Controller
     public function edit(string $id)
     {
         $car = Car::findOrfail($id);
-        $category_id=$car['category_id'];
-        $categories = Category::select('id','categoryName')->whereNotIn('id', [$category_id])->get();
+        $categories = Category::select('id','categoryName')->get();
+      //  $category_id=$car['category_id'];
+      //  $categories = Category::select('id','categoryName')->whereNotIn('id', [$category_id])->get();
         return view('updatecar', compact('car','categories'));
         
       //  return "The id is: ".$id;
@@ -113,7 +114,7 @@ class CarController extends Controller
             'carTitle'=>'required|string',
             'description'=>'required|string',
             'image' => 'sometimes|mimes:png,jpg,jpeg|max:2048',
-            'category_id'=>'sometimes',
+            'category_id'=>'required',
             'shortDescription'=>'required'
                 ], $messages);
        

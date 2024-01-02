@@ -73,12 +73,10 @@
     {{-- <input type="hidden" name="remember" value="Off"> --}}
     <div class="form-group">
       <label for="category_id">category_id:</label>
-    <select name="categoryName" id="">
-      <option>{{$car->category->categoryName}}</option>
-      @foreach ($categories as $cat)
-      <option value="{{ $cat->id }}">{{$cat->categoryName}} </option>
-
-      @endforeach
+    <select name="category_id" id="">
+      @foreach($categories as $category)
+                    <option value="{{ $category->id }}" @selected( $category->id == $car->category_id)>{{ $category->categoryName }}</option>
+                @endforeach
     </select>
   </div>
     <div class="checkbox">

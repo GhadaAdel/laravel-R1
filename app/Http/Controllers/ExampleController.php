@@ -20,7 +20,12 @@ class ExampleController extends Controller
     public function blog() {
         return view("blog");
     }
-
+ 
+    public function mySession() {
+        session()->put('test', 'First Laravel session');
+        $data = session('test');
+        return view('session', compact('data'));
+    }
 
     public function upload(Request $request) {
         // $extension= $request->image->getClientOriginalExtension();

@@ -6,6 +6,7 @@ use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\PieceController;
 use App\Http\Controllers\PlaceController;
 use App\Models\Car;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,7 +93,7 @@ Route::prefix('support')->group(function(){
       Route::get('news',[PieceController::class,'create']);
       Route::post('storenews',[PieceController::class,'store'])->name('storenews');
 
-      Route::get('cars',[CarController::class,'index']);
+      Route::get('cars',[CarController::class,'index'])->middleware('verified');
 
       Route::get('editcar/{id}',[CarController::class,'edit']);
 
@@ -114,9 +115,7 @@ Route::prefix('support')->group(function(){
 
      Route::get('deletepost/{id}',[PieceController::class,'destroy']);
 
-     Route::post('addcar',[CarController::class,'store'])->name('addcar');
-
-      Route::get('addcar',[CarController::class,'create']);
+    
 
       Route::get('trashed',[CarController::class,'trashed']);
 
@@ -149,6 +148,22 @@ Route::prefix('support')->group(function(){
 
       Route::get('editplace/{id}',[PlaceController::class,'edit']);
       Route::get('deleteplace/{id}',[PlaceController::class,'destroy']);
+
+      Auth::routes(['verify'=>true]);
+
+      Route::get('session',[ExampleController::class,'mySession']);
+
+      Route::group(
+        [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+        ], function(){
+            
+          Route::post('addcar',[CarController::class,'store'])->name('addcar');
+
+          Route::get('addcar',[CarController::class,'create']);
+           });
+    
       
     //  Route::get('place',[PlaceController::class,'index']);
 
@@ -209,3 +224,5 @@ Route::prefix('product')->group(function(){
     return 'camera page';
       });
     });*/
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
