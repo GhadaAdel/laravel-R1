@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\PieceController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\TrialController;
 use App\Models\Car;
 use App\Models\User;
 
@@ -164,6 +165,10 @@ Route::prefix('support')->group(function(){
           Route::get('addcar',[CarController::class,'create']);
            });
     
+
+      Route::get('/hola',[TrialController::class,'index'])->name('posts.index');
+      Route::get('/hola/create',[TrialController::class,'create'])->name('create');
+      Route::post('/yla',[TrialController::class,'store'])->name('store');
       
     //  Route::get('place',[PlaceController::class,'index']);
 

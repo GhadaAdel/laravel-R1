@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\Expiration;
 
 class Kernel extends ConsoleKernel
 {
@@ -12,9 +13,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('user:expiration')->everyMinute();
     }
 
+    protected function backup(Schedule $schedule): void
+{
+    $schedule->command('db:backup')->daily();
+}
     /**
      * Register the commands for the application.
      */
